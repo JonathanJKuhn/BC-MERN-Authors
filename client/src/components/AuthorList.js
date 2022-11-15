@@ -1,8 +1,19 @@
 import React from "react";
+import axios from "axios";
 import { Table, Button } from "react-bootstrap";
 
 const AuthorList = (props) => {
-  const { authors } = props;
+  const { authors, setAuthors } = props;
+
+  const deleteAuthor = (authorId) => {
+    axios
+      .delete(`http://localhost:8000/api/authors/${authorId}`)
+      .then((res) => {
+        setAuthors(authors.filter((author) => author._id !== authorId));
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <Table striped bordered>
       <thead>
@@ -22,7 +33,10 @@ const AuthorList = (props) => {
                 <Button className="me-1" href={`/edit/${author._id}`}>
                   Edit
                 </Button>
-                <Button className="ms-1" href={`/delete/${author._id}`}>
+                <Button
+                  className="ms-1"
+                  onClick={() => deleteAuthor(author._id)}
+                >
                   Delete
                 </Button>
               </td>

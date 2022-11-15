@@ -20,7 +20,7 @@ const Main = () => {
   return (
     <Container>
       <Header currentRoute="home" />
-      <AuthorList authors={authors} />
+      <AuthorList authors={authors} setAuthors={setAuthors} />
     </Container>
   );
 };
