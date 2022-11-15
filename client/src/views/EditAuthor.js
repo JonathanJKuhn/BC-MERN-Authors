@@ -9,6 +9,7 @@ const EditAuthor = () => {
   const { id } = useParams();
   const [author, setAuthor] = useState({});
   const [loaded, setLoaded] = useState(false);
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const EditAuthor = () => {
       .then((res) => {
         setAuthor(res.data);
         setLoaded(true);
+        setErrors([]);
       })
       .catch((err) => {
         err.response.status === 404 ? navigate("/404") : console.error(err);
@@ -27,12 +29,24 @@ const EditAuthor = () => {
     axios
       .put(`http://localhost:8000/api/authors/${id}`, authorParam)
       .then(() => navigate("/"))
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        const errorResponse = err.response.data.errors;
+        const errorArr = [];
+        for (const key of Object.keys(errorResponse)) {
+          errorArr.push(errorResponse[key].message);
+        }
+        setErrors(errorArr);
+      });
   };
 
   return (
     <Container>
       <Header currentRoute="edit" />
+      {errors.map((err, index) => (
+        <p key={index} className="text-danger">
+          {err}
+        </p>
+      ))}
       {loaded && (
         <AuthorForm
           onSubmitProp={updateAuthor}
