@@ -20,12 +20,20 @@ const Header = (props) => {
             Add a new author:
           </p>
         </>
+      ) : currentRoute === "edit" ? (
+        <>
+          <Link to="/">Home</Link>
+          <p className="lead fw-bold" style={{ color: "purple" }}>
+            Edit this author:
+          </p>
+        </>
       ) : (
-        currentRoute === "edit" && (
+        currentRoute === "404" && (
           <>
             <Link to="/">Home</Link>
-            <p className="lead fw-bold" style={{ color: "purple" }}>
-              Edit this author:
+            <p className="lead fw-bold" style={{ color: "red" }}>
+              We could not find the author you were looking for. Click the
+              button below to add a new author to the database.
             </p>
           </>
         )

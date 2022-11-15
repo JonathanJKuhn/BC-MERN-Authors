@@ -12,11 +12,16 @@ const EditAuthor = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/authors/${id}`).then((res) => {
-      setAuthor(res.data);
-      setLoaded(true);
-    });
-  });
+    axios
+      .get(`http://localhost:8000/api/authors/${id}`)
+      .then((res) => {
+        setAuthor(res.data);
+        setLoaded(true);
+      })
+      .catch((err) => {
+        err.response.status === 404 ? navigate("/404") : console.error(err);
+      });
+  }, [id, navigate]);
 
   const updateAuthor = (authorParam) => {
     axios

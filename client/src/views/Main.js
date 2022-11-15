@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Container } from "react-bootstrap";
 import Header from "../components/Header";
 import AuthorList from "../components/AuthorList";
 
@@ -17,10 +18,10 @@ const Main = () => {
       });
   }, [setAuthors]);
   return (
-    <div>
+    <Container>
       <Header currentRoute="home" />
       <AuthorList authors={authors} />
-    </div>
+    </Container>
   );
 };
 
